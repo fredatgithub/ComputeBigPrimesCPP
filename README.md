@@ -1,1 +1,1 @@
-# ComputeBigPrimesCPP
+# Compute Big Primes in C++
