@@ -29,7 +29,7 @@ inline static cpp_int mulmod(const cpp_int& a, const cpp_int& b, const cpp_int& 
   return (a * b) % mod;
 }
 
-cpp_int powmod(cpp_int base, cpp_int exp, const cpp_int& mod) {
+static cpp_int powmod(cpp_int base, cpp_int exp, const cpp_int& mod) {
   cpp_int res = 1 % mod;
   base %= mod;
   while (exp > 0) {
@@ -46,7 +46,7 @@ static inline void decompose(const cpp_int& n, cpp_int& d, unsigned& s) {
   while ((d & 1) == 0) { d >>= 1; ++s; }
 }
 
-bool miller_rabin(const cpp_int& n, int rounds = 32, std::mt19937_64* rng_ptr = nullptr) {
+static bool miller_rabin(const cpp_int& n, int rounds = 32, std::mt19937_64* rng_ptr = nullptr) {
   if (n < 2) return false;
   for (size_t i = 0; i < SMALL_PRIME_COUNT; ++i) {
     uint64_t p = SMALL_PRIMES[i];
@@ -93,7 +93,7 @@ bool miller_rabin(const cpp_int& n, int rounds = 32, std::mt19937_64* rng_ptr = 
   return true;
 }
 
-bool is_prime(const cpp_int& n, std::mt19937_64* rng_ptr = nullptr) {
+static bool is_prime(const cpp_int& n, std::mt19937_64* rng_ptr = nullptr) {
   if (n < 2) return false;
   for (size_t i = 0; i < SMALL_PRIME_COUNT; ++i) {
     uint64_t p = SMALL_PRIMES[i];
@@ -103,7 +103,7 @@ bool is_prime(const cpp_int& n, std::mt19937_64* rng_ptr = nullptr) {
   return miller_rabin(n, 32, rng_ptr);
 }
 
-cpp_int next_candidate(cpp_int n) {
+static cpp_int next_candidate(cpp_int n) {
   if (n <= 2) return 2;
   if ((n & 1) == 0) ++n;
   while (true) {
@@ -112,7 +112,7 @@ cpp_int next_candidate(cpp_int n) {
   }
 }
 
-std::vector<cpp_int> generate_primes(cpp_int start, size_t count) {
+static std::vector<cpp_int> generate_primes(cpp_int start, size_t count) {
   std::vector<cpp_int> primes;
   primes.reserve(count);
   std::mt19937_64 rng(std::random_device{}());
